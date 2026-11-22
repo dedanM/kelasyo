@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestion d’équipe — Kelasyo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/equipe.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo"><span class="logo-mark">K</span><span class="logo-text">Kelasyo</span></a>
+      <nav class="nav">
+        <a href="index.html">Accueil</a>
+        <a href="equipe.html">Équipe</a>
+      </nav>
+      <button class="btn btn-primary btn-sm" id="inviteBtn">+ Inviter</button>
+    </div>
+  </header>
+  <section class="page-header">
+    <div class="container">
+      <h1>Gestion d’équipe</h1>
+      <p class="page-sub">Workspace <strong>Acme Corp</strong></p>
+    </div>
+  </section>
+  <section class="team-content">
+    <div class="container">
+      <div class="team-toolbar">
+        <input type="text" id="searchMembers" placeholder="Rechercher…" class="search-input" />
+      </div>
+      <div class="table-wrap">
+        <table class="members-table"><thead><tr><th>Membre</th><th>Rôle</th><th>Email</th><th>Statut</th></tr></thead>
+        <tbody id="membersBody"></tbody></table>
+      </div>
+      <div class="pending-section">
+        <h3>Invitations en attente</h3>
+        <div id="pendingList"></div>
+      </div>
+    </div>
+  </section>
+  <div class="modal-overlay" id="inviteModal">
+    <div class="modal">
+      <div class="modal-header"><h3>Inviter</h3><button class="modal-close" id="closeModal">×</button></div>
+      <div class="modal-body">
+        <textarea id="inviteEmails" rows="4" placeholder="email@exemple.com"></textarea>
+        <select id="inviteRole"><option value="member">Membre</option><option value="admin">Admin</option><option value="viewer">Viewer</option></select>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelInvite">Annuler</button>
+        <button class="btn btn-primary" id="sendInvites">Envoyer</button>
+      </div>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="js/equipe.js"></script>
+</body>
+</html>
