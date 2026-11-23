@@ -1,25 +1,53 @@
 name: Deploy GitHub Pages
+
 on:
   push:
     branches: [main]
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+
 permissions:
   contents: read
   pages: write
   id-token: write
+
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
+
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Vérifier les fichiers essentiels
+        run: |
+          set -e
+          test -f index.html
+          echo "Fichiers OK"
+
+      - name: Préparer l'artifact
+        run: |
+          mkdir -p _site
+          rsync -a --exclude '.git' --exclude '_site' --exclude 'node_modules' ./ _site/
+          rm -f _site/js/config.js || true
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
   deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v4
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-      - id: deployment
+      - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
