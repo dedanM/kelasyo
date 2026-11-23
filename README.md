@@ -2,74 +2,38 @@
 
 Hub SaaS pour équipes produit & engineering.
 
-**Site en ligne :** https://dedanM.github.io/kelasyo/
+**Site :** https://dedanM.github.io/kelasyo/
 
 ## Fonctionnalités
 
-- Messages d'équipe
-- Rapports GitHub (PRs, issues, reviews)
-- Tests Playwright
-- Déploiements Vercel
-- Réunions en direct + agenda / rappels
-- Multi-comptes / workspaces
+- Landing + dashboard (Messages, GitHub, Playwright, Vercel, Réunions, Comptes)
+- Auth (login / signup local + prêt Supabase)
 - Gestion d'équipe (rôles, invitations)
-
-## Structure
-
-```
-kelasyo/
-├── index.html              # Landing + dashboard
-├── equipe.html             # Gestion d'équipe
-├── css/
-│   ├── styles.css
-│   └── equipe.css
-├── js/
-│   ├── main.js
-│   └── equipe.js
-├── database/
-│   ├── schema.sql          # Schéma PostgreSQL complet
-│   └── seed.sql            # Données de démo
-└── README.md
-```
-
-## Base de données
-
-Schéma PostgreSQL prêt pour **Supabase**, **Neon**, **Railway** ou tout Postgres.
-
-Tables principales :
-- `users`, `workspaces`, `workspace_members`, `invitations`
-- `channels`, `messages`
-- `github_connections`, `github_repos`
-- `playwright_runs`, `vercel_deployments`
-- `meetings`, `meeting_participants`, `reminders`
-
-### Installer la DB
-
-```bash
-psql $DATABASE_URL -f database/schema.sql
-psql $DATABASE_URL -f database/seed.sql
-```
-
-Ou dans Supabase : SQL Editor → coller `schema.sql` puis `seed.sql`.
+- Partage de fichiers (tous types) + aperçu + commentaires + permissions
+- Conférences Microsoft Teams (démo + Graph API)
+- Notes de réunion + résumé auto
+- Notifications in-app + Web Push
+- Intégrations Slack / Discord + webhooks GitHub
+- PWA (service worker, cache, installable)
+- Schéma PostgreSQL (`database/schema.sql`)
 
 ## Lancer en local
 
 ```bash
 python -m http.server 3000
-# ou: npx serve .
 ```
 
 Ouvre http://localhost:3000
 
+**Archive complète recommandée** : télécharge le zip livré dans le chat (tous les JS / pages).
+
 ## GitHub Pages
 
-Déploiement automatique via `.github/workflows/pages.yml` sur chaque push `main`.
+1. Settings → Pages → Source = **GitHub Actions**
+2. Actions → workflow *Deploy GitHub Pages* (vert = en ligne)
 
 URL : **https://dedanM.github.io/kelasyo/**
 
-## Prochaines étapes backend
+## Config optionnelle
 
-1. Brancher Supabase (auth + Postgres)
-2. API REST ou Edge Functions pour messages / réunions
-3. Webhooks GitHub + Vercel
-4. Sync calendrier (Google / Outlook)
+Copie `js/config.example.js` → `js/config.js` pour Supabase, Teams, VAPID push.
